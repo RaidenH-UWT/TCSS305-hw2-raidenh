@@ -1,10 +1,10 @@
 # TCSS305
 
-[Assignemnt Name]
+Assignment 2
 
-[Your Name]
+Raiden Hiland
 
-Autumn 202[Y]
+Autumn 2024
 
 ## Assignment Overview
 [Describe your understanding of the purpose and scope of the assignment
