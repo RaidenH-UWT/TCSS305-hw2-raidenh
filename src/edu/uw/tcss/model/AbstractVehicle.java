@@ -23,6 +23,14 @@ public abstract class AbstractVehicle implements Vehicle {
      *
      */
     protected Direction myDir;
+    /**
+     *
+     */
+    protected int myPokeTolerance;
+    /**
+     *
+     */
+    protected int myPokeCount;
 
     protected AbstractVehicle(final int theX, final int theY, final Direction theDir) {
         super();
@@ -47,12 +55,12 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public int getDeathTime() {
-        return 0;
+        return myPokeTolerance - myPokeCount;
     }
 
     @Override
     public String getImageFileName() {
-        return "";
+        return getClass().getSimpleName().toLowerCase() + ".gif";
     }
 
     @Override
@@ -62,22 +70,27 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public int getX() {
-        return 0;
+        return myX;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return myY;
     }
 
     @Override
     public boolean isAlive() {
-        return false;
+        boolean output = false;
+        if (getDeathTime() == 0) {
+            output = true;
+            myPokeCount = 0;
+        }
+        return output;
     }
 
     @Override
     public void poke() {
-
+        myPokeCount++;
     }
 
     @Override
@@ -87,12 +100,12 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public void setDirection(final Direction theDir) {
-
+        myDir = theDir;
     }
 
     @Override
     public void setX(final int theX) {
-
+        myX = theX;
     }
 
     @Override
