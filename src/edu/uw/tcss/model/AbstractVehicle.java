@@ -7,28 +7,30 @@ import java.util.Map;
  * @author Raiden H
  * @version 23-10-2024
  */
+//warning conflicts with CheckStyle warning, I'm giving CheckStyle higher priority.
+@SuppressWarnings("StringBufferReplaceableByString")
 public abstract class AbstractVehicle implements Vehicle {
     // an abstract class cannot create objects and can only be accessed from it's children
     // an abstract method can only be used in the abstract class and does not have a body,
     // it's overridden by children
     /**
-     *
+     * x coordinate of this AbstractVehicle
      */
     protected int myX;
     /**
-     *
+     * y coordinate of this abstract vehicle
      */
     protected int myY;
     /**
-     *
+     * direction this AbstractVehicle is facing
      */
     protected Direction myDir;
     /**
-     *
+     * amount of pokes before this AbstractVehicle revives
      */
     protected int myPokeTolerance;
     /**
-     *
+     * current poke count of this AbstractVehicle
      */
     protected int myPokeCount;
 
