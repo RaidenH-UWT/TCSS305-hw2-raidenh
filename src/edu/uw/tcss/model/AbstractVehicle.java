@@ -32,25 +32,29 @@ public abstract class AbstractVehicle implements Vehicle {
      */
     protected int myPokeCount;
 
-    protected AbstractVehicle(final int theX, final int theY, final Direction theDir) {
+    protected AbstractVehicle(final int theX, final int theY,
+                              final Direction theDir, final int thePokeTolerance) {
         super();
         myX = theX;
         myY = theY;
         myDir = theDir;
-    }
-    @Override
-    public boolean canPass(final Terrain theTerrain, final Light theLight) {
-        return false;
+        myPokeTolerance = thePokeTolerance;
+        myPokeCount = 0;
     }
 
     @Override
-    public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
-        return null;
-    }
+    public abstract boolean canPass(Terrain theTerrain, Light theLight);
+
+    @Override
+    public abstract Direction chooseDirection(Map<Direction, Terrain> theNeighbors);
 
     @Override
     public void collide(final Vehicle theOther) {
-
+        if (isAlive() && theOther.isAlive()) {
+            if (getDeathTime() > theOther.getDeathTime()) {
+                myPokeCount = myPokeTolerance;
+            }
+        }
     }
 
     @Override
@@ -60,7 +64,13 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public String getImageFileName() {
-        return getClass().getSimpleName().toLowerCase() + ".gif";
+        final String filename;
+        if (isAlive()) {
+            filename = getClass().getSimpleName().toLowerCase() + ".gif";
+        } else {
+            filename = getClass().getSimpleName().toLowerCase() + "_dead.gif";
+        }
+        return filename;
     }
 
     @Override
@@ -80,22 +90,20 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public boolean isAlive() {
-        boolean output = false;
-        if (getDeathTime() == 0) {
-            output = true;
-            myPokeCount = 0;
-        }
-        return output;
+        return myPokeCount == 0;
     }
 
     @Override
     public void poke() {
-        myPokeCount++;
+        myPokeCount--;
+        if (isAlive()) {
+            setDirection(Direction.random());
+        }
     }
 
     @Override
     public void reset() {
-
+        //TODO: figure out if there's a better way to do this than just storing initial state.
     }
 
     @Override
