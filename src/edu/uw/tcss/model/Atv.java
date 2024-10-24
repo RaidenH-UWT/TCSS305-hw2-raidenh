@@ -1,5 +1,7 @@
 package edu.uw.tcss.model;
 
+import java.util.Map;
+
 /**
  *
  * @author Raiden H
@@ -7,6 +9,16 @@ package edu.uw.tcss.model;
  */
 public class Atv extends AbstractVehicle {
     public Atv(final int theX, final int theY, final Direction theDir) {
-        super(theX, theY, theDir);
+        super(theX, theY, theDir, 25);
+    }
+
+    @Override
+    public boolean canPass(Terrain theTerrain, Light theLight) {
+        return false;
+    }
+
+    @Override
+    public Direction chooseDirection(Map<Direction, Terrain> theNeighbors) {
+        return null;
     }
 }
