@@ -61,7 +61,7 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public int getDeathTime() {
-        return myPokeTolerance - myPokeCount;
+        return myPokeTolerance;
     }
 
     @Override
