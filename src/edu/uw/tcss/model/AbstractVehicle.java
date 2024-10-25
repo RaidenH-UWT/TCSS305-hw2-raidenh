@@ -26,7 +26,7 @@ public abstract class AbstractVehicle implements Vehicle {
     /**
      * amount of pokes before this AbstractVehicle revives
      */
-    private final int myPokeTolerance;
+    private final int myPokeTolerance; // laugh at my variable names, do it
     /**
      * current poke count of this AbstractVehicle
      */
