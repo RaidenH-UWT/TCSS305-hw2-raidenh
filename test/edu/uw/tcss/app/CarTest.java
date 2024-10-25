@@ -91,15 +91,37 @@ public class CarTest {
     }
 
     @Test
-    void testCollide() {
+    void testCollideTruck() {
         myTestCar.collide(new Truck(0, 0, Direction.NORTH));
         assertFalse(myTestCar.isAlive(), "Car should not survive collision with Truck");
+    }
+
+    @Test
+    void testCollideCar() {
+        myTestCar.collide(new Car(0, 0, Direction.NORTH));
+        assertFalse(myTestCar.isAlive(), "Car should not survive collision with Car");
+    }
+
+    @Test
+    void testCollideTaxi() {
         myTestCar.collide(new Taxi(0, 0, Direction.NORTH));
-        assertTrue(myTestCar.isAlive(), "Car should survive collision with Taxi");
+        assertFalse(myTestCar.isAlive(), "Car should not survive collision with Taxi");
+    }
+
+    @Test
+    void testCollideAtv() {
         myTestCar.collide(new Atv(0, 0, Direction.NORTH));
         assertTrue(myTestCar.isAlive(), "Car should survive collision with Atv");
+    }
+
+    @Test
+    void testCollideBicycle() {
         myTestCar.collide(new Bicycle(0, 0, Direction.NORTH));
         assertTrue(myTestCar.isAlive(), "Car should survive collision with Bicycle");
+    }
+
+    @Test
+    void testCollideHuman() {
         myTestCar.collide(new Human(0, 0, Direction.NORTH));
         assertTrue(myTestCar.isAlive(), "Car should survive collision with Human");
     }
