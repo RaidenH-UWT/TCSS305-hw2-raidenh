@@ -125,10 +125,4 @@ public abstract class AbstractVehicle implements Vehicle {
         output.append(getDirection());
         return output.toString();
     }
-
-    //This might not be necessary but the project desc mentioned a single random method
-    //so i just put this here as a placeholder.
-    public static Direction randomDir() {
-        return Direction.random();
-    }
 }
