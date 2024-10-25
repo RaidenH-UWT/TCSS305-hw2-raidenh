@@ -3,7 +3,6 @@ package edu.uw.tcss.app;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.uw.tcss.model.Atv;
@@ -45,11 +44,14 @@ public class CarTest {
     void testGetImageFileName() {
         assertEquals("car.gif", myTestCar.getImageFileName(),
                 "Living car image filename is incorrect.");
+        myTestCar.collide(new Truck(0, 0, Direction.NORTH));
+        assertEquals("car_dead.gif", myTestCar.getImageFileName(),
+                "Dead car image filename is incorrect.");
     }
     @Test
     void testCanPass() {
         assertAll("Testing canPass()",
-                () -> assertFalse(myTestCar.canPass(Terrain.GRASS, Light.RED),
+                () -> assertFalse(myTestCar.canPass(Terrain.GRASS, Light.GREEN),
                         "Car should not be able to pass grass."),
                 () -> assertTrue(myTestCar.canPass(Terrain.STREET, Light.GREEN),
                         "Car should be able to pass streets."),
@@ -65,8 +67,8 @@ public class CarTest {
                         "Car should be able to pass red lights."),
                 () -> assertTrue(myTestCar.canPass(Terrain.CROSSWALK, Light.GREEN),
                         "Car should be able to pass green-light crosswalks."),
-                () -> assertTrue(myTestCar.canPass(Terrain.CROSSWALK, Light.YELLOW),
-                        "Car should be able to pass yellow-light crosswalks."),
+                () -> assertFalse(myTestCar.canPass(Terrain.CROSSWALK, Light.YELLOW),
+                        "Car should not be able to pass yellow-light crosswalks."),
                 () -> assertFalse(myTestCar.canPass(Terrain.CROSSWALK, Light.RED),
                         "Car should not be able to pass red-light crosswalks.")
         );
@@ -75,10 +77,17 @@ public class CarTest {
     @Test
     void testChooseDirection() {
         TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
-        assertAll("Testing car chooseDirection()",
-                () -> assertNotEquals(Direction.SOUTH, myTestCar.chooseDirection(TEST_MAP),
-                        "Car should prefer any direction but backwards.")
-        );
+        TEST_MAP.put(Direction.SOUTH, Terrain.WALL);
+        TEST_MAP.put(Direction.EAST, Terrain.LIGHT);
+        TEST_MAP.put(Direction.WEST, Terrain.CROSSWALK);
+        assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
+                "Car should prefer going left if blocked.");
+        myTestCar.setDirection(Direction.WEST);
+        assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
+                "Car should prefer going forward if possible.");
+        myTestCar.setDirection(Direction.SOUTH);
+        assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
+                "Car should prefer right if blocked twice.");
     }
 
     @Test
@@ -98,6 +107,9 @@ public class CarTest {
     @Test
     void testIsAlive() {
         assertTrue(myTestCar.isAlive(),
-                "Car should always be alive");
+                "Car be alive by default.");
+        myTestCar.collide(new Truck(0, 0, Direction.NORTH));
+        assertFalse(myTestCar.isAlive(),
+                "Car should be dead here");
     }
 }
