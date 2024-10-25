@@ -1,5 +1,6 @@
 package edu.uw.tcss.model;
 
+import java.util.EnumSet;
 import java.util.Map;
 
 /**
@@ -8,6 +9,11 @@ import java.util.Map;
  * @version 23-10-2024
  */
 public class Atv extends AbstractVehicle {
+    /**
+     * EnumSet list of allowed terrain for Truck vehicles
+     */
+    private static final EnumSet<Terrain> ALLOWED_TERRAIN = EnumSet.of(
+            Terrain.STREET, Terrain.LIGHT, Terrain.CROSSWALK, Terrain.GRASS, Terrain.TRAIL);
     /**
      * Constructor for the Atv class.
      *
@@ -21,7 +27,7 @@ public class Atv extends AbstractVehicle {
 
     @Override
     public boolean canPass(final Terrain theTerrain, final Light theLight) {
-        return theTerrain != Terrain.WALL;
+        return ALLOWED_TERRAIN.contains(theTerrain);
     }
 
     @Override
