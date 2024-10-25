@@ -1,7 +1,5 @@
 package edu.uw.tcss.model;
 
-import java.util.Map;
-
 /**
  *
  * @author Raiden H
@@ -43,12 +41,6 @@ public abstract class AbstractVehicle implements Vehicle {
         myPokeTolerance = thePokeTolerance;
         myPokeCount = 0;
     }
-
-    @Override
-    public abstract boolean canPass(Terrain theTerrain, Light theLight);
-
-    @Override
-    public abstract Direction chooseDirection(Map<Direction, Terrain> theNeighbors);
 
     @Override
     public void collide(final Vehicle theOther) {
@@ -132,5 +124,11 @@ public abstract class AbstractVehicle implements Vehicle {
         output.append("; ");
         output.append(getDirection());
         return output.toString();
+    }
+
+    //This might not be necessary but the project desc mentioned a single random method
+    //so i just put this here as a placeholder.
+    public static Direction randomDir() {
+        return Direction.random();
     }
 }
