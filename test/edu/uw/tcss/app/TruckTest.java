@@ -49,7 +49,7 @@ public class TruckTest {
     @Test
     void testCanPass() {
         assertAll("Testing canPass()",
-                () -> assertFalse(myTestTruck.canPass(Terrain.GRASS, Light.RED),
+                () -> assertFalse(myTestTruck.canPass(Terrain.GRASS, Light.GREEN),
                         "Truck should not be able to pass grass."),
                 () -> assertTrue(myTestTruck.canPass(Terrain.STREET, Light.GREEN),
                         "Truck should be able to pass streets."),
