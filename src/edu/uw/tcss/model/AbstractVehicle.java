@@ -14,23 +14,23 @@ public abstract class AbstractVehicle implements Vehicle {
     /**
      * x coordinate of this AbstractVehicle
      */
-    protected int myX;
+    private int myX;
     /**
      * y coordinate of this abstract vehicle
      */
-    protected int myY;
+    private int myY;
     /**
      * direction this AbstractVehicle is facing
      */
-    protected Direction myDir;
+    private Direction myDir;
     /**
      * amount of pokes before this AbstractVehicle revives
      */
-    protected int myPokeTolerance;
+    private final int myPokeTolerance;
     /**
      * current poke count of this AbstractVehicle
      */
-    protected int myPokeCount;
+    private int myPokeCount;
 
     protected AbstractVehicle(final int theX, final int theY,
                               final Direction theDir, final int thePokeTolerance) {
