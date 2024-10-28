@@ -38,12 +38,12 @@ public class Bicycle extends AbstractVehicle {
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
         Direction choice = getDirection().reverse();
-        if (theNeighbors.containsValue(Terrain.TRAIL)) {
-            for (final Map.Entry<Direction, Terrain> entry : theNeighbors.entrySet()) {
-                if (entry.getValue() == Terrain.TRAIL) {
-                    choice = entry.getKey();
-                }
-            }
+        if (theNeighbors.get(getDirection()) == Terrain.TRAIL) {
+            choice = getDirection();
+        } else if (theNeighbors.get(getDirection().left()) == Terrain.TRAIL) {
+            choice = getDirection().left();
+        } else if (theNeighbors.get(getDirection().right()) == Terrain.TRAIL) {
+            choice = getDirection().right();
         } else if (ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection()))) {
             choice = getDirection();
         } else if (ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))) {
