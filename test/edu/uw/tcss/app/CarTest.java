@@ -88,7 +88,16 @@ public class CarTest {
         myTestCar.setDirection(Direction.SOUTH);
         assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
                 "Car should prefer right if blocked twice.");
+        myTestCar.setDirection(Direction.EAST);
+        assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
+                "Car should reverse as a last resort");
     }
+    /*
+        X
+      Y   X
+        X
+
+     */
 
     @Test
     void testCollideTruck() {
