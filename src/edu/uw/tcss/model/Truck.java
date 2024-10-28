@@ -42,8 +42,8 @@ public class Truck extends AbstractVehicle {
                 && !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
             choice = getDirection().reverse();
         } else {
-            while (choice != getDirection().reverse()
-                    && !ALLOWED_TERRAIN.contains(theNeighbors.get(choice))) {
+            while (choice == getDirection().reverse()
+                    || !ALLOWED_TERRAIN.contains(theNeighbors.get(choice))) {
                 choice = Direction.random();
             }
         }
