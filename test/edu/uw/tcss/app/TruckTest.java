@@ -33,6 +33,11 @@ public class TruckTest {
      */
     private static final Map<Direction, Terrain> TEST_MAP = new HashMap<>();
     /**
+     * The number of times to repeat a test to have a high probability that all
+     * random possibilities have been explored.
+     */
+    private static final int TRIES_FOR_RANDOMNESS = 10;
+    /**
      * test Truck object for testing Truck methods.
      */
     private Vehicle myTestTruck;
@@ -76,12 +81,35 @@ public class TruckTest {
     void testChooseDirection() {
         TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
         TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
-        TEST_MAP.put(Direction.EAST, Terrain.CROSSWALK);
+        TEST_MAP.put(Direction.EAST, Terrain.WALL);
         TEST_MAP.put(Direction.WEST, Terrain.LIGHT);
-        assertAll("Testing truck chooseDirection()",
-                () -> assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
-                        "Truck should prefer any direction but backwards.")
-        );
+        for (int i = 0; i < TRIES_FOR_RANDOMNESS; i++) {
+            assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
+                            "Truck should prefer any direction but backwards.");
+        }
+        TEST_MAP.clear();
+        TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
+        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
+        TEST_MAP.put(Direction.EAST, Terrain.TRAIL);
+        TEST_MAP.put(Direction.WEST, Terrain.WALL);
+        assertEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
+                "Truck should reverse if forced to.");
+
+        TEST_MAP.clear();
+        TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
+        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
+        TEST_MAP.put(Direction.EAST, Terrain.CROSSWALK);
+        TEST_MAP.put(Direction.WEST, Terrain.WALL);
+        assertEquals(Direction.EAST, myTestTruck.chooseDirection(TEST_MAP),
+                "Truck should take single exit over reversing.");
+
+        TEST_MAP.clear();
+        TEST_MAP.put(Direction.NORTH, Terrain.STREET);
+        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
+        TEST_MAP.put(Direction.EAST, Terrain.STREET);
+        TEST_MAP.put(Direction.WEST, Terrain.STREET);
+        assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
+                "Truck should prefer any direction but backwards.");
     }
 
     @Test
