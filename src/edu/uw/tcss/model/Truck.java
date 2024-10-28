@@ -38,8 +38,8 @@ public class Truck extends AbstractVehicle {
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
         Direction choice = Direction.random();
         if (!ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection()))
-                || !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))
-                || !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
+                && !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))
+                && !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
             choice = getDirection().reverse();
         } else {
             while (choice != getDirection().reverse()
