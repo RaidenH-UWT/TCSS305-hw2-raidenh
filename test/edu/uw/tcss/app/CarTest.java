@@ -63,8 +63,8 @@ public class CarTest {
                         "Car should be able to pass green lights."),
                 () -> assertTrue(myTestCar.canPass(Terrain.LIGHT, Light.YELLOW),
                         "Car should be able to pass yellow lights."),
-                () -> assertTrue(myTestCar.canPass(Terrain.LIGHT, Light.RED),
-                        "Car should be able to pass red lights."),
+                () -> assertFalse(myTestCar.canPass(Terrain.LIGHT, Light.RED),
+                        "Car should not be able to pass red lights."),
                 () -> assertTrue(myTestCar.canPass(Terrain.CROSSWALK, Light.GREEN),
                         "Car should be able to pass green-light crosswalks."),
                 () -> assertFalse(myTestCar.canPass(Terrain.CROSSWALK, Light.YELLOW),
@@ -78,7 +78,7 @@ public class CarTest {
     void testChooseDirection() {
         TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
         TEST_MAP.put(Direction.SOUTH, Terrain.WALL);
-        TEST_MAP.put(Direction.EAST, Terrain.LIGHT);
+        TEST_MAP.put(Direction.EAST, Terrain.TRAIL);
         TEST_MAP.put(Direction.WEST, Terrain.CROSSWALK);
         assertEquals(Direction.WEST, myTestCar.chooseDirection(TEST_MAP),
                 "Car should prefer going left if blocked.");
@@ -99,13 +99,13 @@ public class CarTest {
     @Test
     void testCollideCar() {
         myTestCar.collide(new Car(0, 0, Direction.NORTH));
-        assertFalse(myTestCar.isAlive(), "Car should not survive collision with Car");
+        assertTrue(myTestCar.isAlive(), "Car should survive collision with Car");
     }
 
     @Test
     void testCollideTaxi() {
         myTestCar.collide(new Taxi(0, 0, Direction.NORTH));
-        assertFalse(myTestCar.isAlive(), "Car should not survive collision with Taxi");
+        assertTrue(myTestCar.isAlive(), "Car should survive collision with Taxi");
     }
 
     @Test
