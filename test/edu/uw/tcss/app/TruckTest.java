@@ -75,6 +75,9 @@ public class TruckTest {
     @Test
     void testChooseDirection() {
         TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
+        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
+        TEST_MAP.put(Direction.EAST, Terrain.CROSSWALK);
+        TEST_MAP.put(Direction.WEST, Terrain.LIGHT);
         assertAll("Testing truck chooseDirection()",
                 () -> assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
                         "Truck should prefer any direction but backwards.")
