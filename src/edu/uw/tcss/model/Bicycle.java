@@ -27,11 +27,30 @@ public class Bicycle extends AbstractVehicle {
 
     @Override
     public boolean canPass(final Terrain theTerrain, final Light theLight) {
-        return false;
+        boolean result = ALLOWED_TERRAIN.contains(theTerrain);
+        if (theTerrain == Terrain.LIGHT && theLight != Light.GREEN
+                || theTerrain == Terrain.CROSSWALK && theLight != Light.GREEN) {
+            result = false;
+        }
+        return result;
     }
 
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
-        return null;
+        Direction choice = getDirection().reverse();
+        if (theNeighbors.containsValue(Terrain.TRAIL)) {
+            for (final Map.Entry<Direction, Terrain> entry : theNeighbors.entrySet()) {
+                if (entry.getValue() == Terrain.TRAIL) {
+                    choice = entry.getKey();
+                }
+            }
+        } else if (ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection()))) {
+            choice = getDirection();
+        } else if (ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))) {
+            choice = getDirection().left();
+        } else if (ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
+            choice = getDirection().right();
+        }
+        return choice;
     }
 }
