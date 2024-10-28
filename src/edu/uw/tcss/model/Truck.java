@@ -27,11 +27,26 @@ public class Truck extends AbstractVehicle {
 
     @Override
     public boolean canPass(final Terrain theTerrain, final Light theLight) {
-        return false;
+        boolean result = ALLOWED_TERRAIN.contains(theTerrain);
+        if (theTerrain == Terrain.CROSSWALK && theLight == Light.RED) {
+            result = false;
+        }
+        return result;
     }
 
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
-        return null;
+        Direction choice = Direction.random();
+        if (!ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection()))
+                || !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))
+                || !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
+            choice = getDirection().reverse();
+        } else {
+            while (choice != getDirection().reverse()
+                    && !ALLOWED_TERRAIN.contains(theNeighbors.get(choice))) {
+                choice = Direction.random();
+            }
+        }
+        return choice;
     }
 }
