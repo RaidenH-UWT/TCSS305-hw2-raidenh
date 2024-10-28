@@ -8,9 +8,6 @@ package edu.uw.tcss.model;
 //warning conflicts with CheckStyle warning, I'm giving CheckStyle higher priority.
 @SuppressWarnings("StringBufferReplaceableByString")
 public abstract class AbstractVehicle implements Vehicle {
-    // an abstract class cannot create objects and can only be accessed from it's children
-    // an abstract method can only be used in the abstract class and does not have a body,
-    // it's overridden by children
     /**
      * x coordinate of this AbstractVehicle
      */
@@ -31,6 +28,19 @@ public abstract class AbstractVehicle implements Vehicle {
      * current poke count of this AbstractVehicle
      */
     private int myPokeCount;
+    /**
+     * initial x coordinate of this AbstractVehicle
+     */
+    private final int myInitX;
+    /**
+     * initial y coordinate of this abstract vehicle
+     */
+    private final int myInitY;
+    /**
+     * initial direction this AbstractVehicle is facing
+     */
+    private final Direction myInitDir;
+
 
     protected AbstractVehicle(final int theX, final int theY,
                               final Direction theDir, final int thePokeTolerance) {
@@ -40,6 +50,10 @@ public abstract class AbstractVehicle implements Vehicle {
         myDir = theDir;
         myPokeTolerance = thePokeTolerance;
         myPokeCount = 0;
+
+        myInitX = theX;
+        myInitY = theY;
+        myInitDir = theDir;
     }
 
     @Override
@@ -84,7 +98,7 @@ public abstract class AbstractVehicle implements Vehicle {
 
     @Override
     public boolean isAlive() {
-        return myPokeCount == 0;
+        return myPokeTolerance - myPokeCount == myPokeTolerance;
     }
 
     @Override
@@ -92,12 +106,17 @@ public abstract class AbstractVehicle implements Vehicle {
         myPokeCount--;
         if (isAlive()) {
             setDirection(Direction.random());
+            myPokeCount = 0;
         }
     }
 
     @Override
     public void reset() {
         //TODO: figure out if there's a better way to do this than just storing initial state.
+        myX = myInitX;
+        myY = myInitY;
+        myDir = myInitDir;
+        myPokeCount = 0;
     }
 
     @Override
