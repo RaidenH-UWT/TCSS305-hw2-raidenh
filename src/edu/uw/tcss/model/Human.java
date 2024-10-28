@@ -15,6 +15,10 @@ public class Human extends AbstractVehicle {
     private static final EnumSet<Terrain> ALLOWED_TERRAIN = EnumSet.of(
             Terrain.GRASS, Terrain.CROSSWALK);
     /**
+     * this vehicle's poke tolerance
+     */
+    private static final int HUMAN_TOLERANCE = 45;
+    /**
      * Constructor for the Human class.
      *
      * @param theX x coordinate of the created human
@@ -22,7 +26,7 @@ public class Human extends AbstractVehicle {
      * @param theDir direction the created human is facing
      */
     public Human(final int theX, final int theY, final Direction theDir) {
-        super(theX, theY, theDir, 45);
+        super(theX, theY, theDir, HUMAN_TOLERANCE);
     }
 
     //i really wanted to push this up to the abstract class cause it's very similar

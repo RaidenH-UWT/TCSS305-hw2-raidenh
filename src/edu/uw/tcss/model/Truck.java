@@ -15,6 +15,10 @@ public class Truck extends AbstractVehicle {
     private static final EnumSet<Terrain> ALLOWED_TERRAIN = EnumSet.of(
             Terrain.STREET, Terrain.LIGHT, Terrain.CROSSWALK);
     /**
+     * this vehicle's poke tolerance
+     */
+    private static final int TRUCK_TOLERANCE = 0;
+    /**
      * Constructor for the Truck class.
      *
      * @param theX x coordinate of the created truck
@@ -22,7 +26,7 @@ public class Truck extends AbstractVehicle {
      * @param theDir direction the created truck is facing
      */
     public Truck(final int theX, final int theY, final Direction theDir) {
-        super(theX, theY, theDir, 0);
+        super(theX, theY, theDir, TRUCK_TOLERANCE);
     }
 
     @Override

@@ -15,9 +15,17 @@ public class Taxi extends AbstractVehicle {
     private static final EnumSet<Terrain> ALLOWED_TERRAIN = EnumSet.of(
             Terrain.STREET, Terrain.LIGHT, Terrain.CROSSWALK);
     /**
+     * this vehicle's poke tolerance
+     */
+    private static final int TAXI_TOLERANCE = 15;
+    /**
      * how long the taxi will wait at a red crosswalk
      */
-    private int myPatience = 3;
+    private static final int TAXI_PATIENCE = 3;
+    /**
+     * how long this taxi has been waiting at a red crosswalk
+     */
+    private int myPatience = TAXI_PATIENCE;
     /**
      * Constructor for the Taxi class.
      *
@@ -26,7 +34,7 @@ public class Taxi extends AbstractVehicle {
      * @param theDir direction the created taxi is facing
      */
     public Taxi(final int theX, final int theY, final Direction theDir) {
-        super(theX, theY, theDir, 15);
+        super(theX, theY, theDir, TAXI_TOLERANCE);
     }
 
     @Override
@@ -36,7 +44,7 @@ public class Taxi extends AbstractVehicle {
             result = false;
         } else if (theTerrain == Terrain.CROSSWALK && theLight == Light.RED) {
             if (myPatience == 0) {
-                myPatience = 3;
+                myPatience = TAXI_PATIENCE;
             } else {
                 result = false;
                 myPatience--;

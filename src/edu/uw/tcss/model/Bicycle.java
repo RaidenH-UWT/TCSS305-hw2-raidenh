@@ -15,6 +15,10 @@ public class Bicycle extends AbstractVehicle {
     private static final EnumSet<Terrain> ALLOWED_TERRAIN = EnumSet.of(
             Terrain.STREET, Terrain.LIGHT, Terrain.CROSSWALK, Terrain.TRAIL);
     /**
+     * this vehicle's poke tolerance
+     */
+    private static final int BICYCLE_TOLERANCE = 35;
+    /**
      * Constructor for the Bicycle class.
      *
      * @param theX x coordinate of the created bicycle
@@ -22,7 +26,7 @@ public class Bicycle extends AbstractVehicle {
      * @param theDir direction the created bicycle is facing
      */
     public Bicycle(final int theX, final int theY, final Direction theDir) {
-        super(theX, theY, theDir, 35);
+        super(theX, theY, theDir, BICYCLE_TOLERANCE);
     }
 
     @Override
