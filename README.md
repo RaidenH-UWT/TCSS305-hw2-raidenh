@@ -47,6 +47,8 @@ storing different types. I'd love to know if there's a better way to do this.
 After that it was all bugfixing, tuning, and tweaking. My last 11 commits were
 just small changes.
 
+I finished this project in 41 commits across 1 week.
+
 ## Unresolved problems in my submission:
 I've got a couple warnings in my test classes which I've ignored because
 they aren't graded. Most egregious is my TestTruck `testChooseDirection()`
