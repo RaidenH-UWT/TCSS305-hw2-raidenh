@@ -48,6 +48,7 @@ public class CarTest {
         assertEquals("car_dead.gif", myTestCar.getImageFileName(),
                 "Dead car image filename is incorrect.");
     }
+    //TODO: test all terrain/light combos, copy over to other tests
     @Test
     void testCanPass() {
         assertAll("Testing canPass()",

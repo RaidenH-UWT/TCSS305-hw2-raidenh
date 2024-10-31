@@ -34,6 +34,7 @@ public class Atv extends AbstractVehicle {
         return ALLOWED_TERRAIN.contains(theTerrain);
     }
 
+    //TODO: MUST CHOOSE VALID DIRECTION IN ALLOWED_TERRAIN
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
         Direction choice = getDirection().reverse();
