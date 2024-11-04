@@ -1,5 +1,9 @@
 package edu.uw.tcss.model;
 
+import java.util.EnumSet;
+import java.util.Map;
+import java.util.Random;
+
 /**
  *
  * @author Raiden H
@@ -40,7 +44,10 @@ public abstract class AbstractVehicle implements Vehicle {
      * initial direction this AbstractVehicle is facing
      */
     private final Direction myInitDir;
-
+    /**
+     * random variable for random needs!
+     */
+    private static final Random RANDOM = new Random();
 
     protected AbstractVehicle(final int theX, final int theY,
                               final Direction theDir, final int thePokeTolerance) {
@@ -144,5 +151,26 @@ public abstract class AbstractVehicle implements Vehicle {
         output.append("; ");
         output.append(getDirection());
         return output.toString();
+    }
+
+    /**
+     * This method randomly selects a valid direction for a vehicle.
+     *
+     * @param neighbors Map<Direction, Terrain> of neighboring tiles
+     * @param ALLOWED_TERRAIN EnumSet<Terrain> of terrain this vehicle can travel on
+     * @return a random direction valid for this vehicle
+     */
+    public static Direction randomValidDirection(final Map<Direction, Terrain> neighbors,
+                                                 final EnumSet<Terrain> ALLOWED_TERRAIN) {
+        Direction choice = Direction.NORTH;
+        final EnumSet<Direction> options = EnumSet.noneOf(Direction.class);
+
+        for (Map.Entry<Direction, Terrain> entry : neighbors.entrySet()) {
+            if (ALLOWED_TERRAIN.contains(entry.getValue())) {
+                options.add(entry.getKey());
+            }
+        }
+        //remove choice and just randomly pick from options with RANDOM
+        return choice;
     }
 }
