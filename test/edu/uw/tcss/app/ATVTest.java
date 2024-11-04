@@ -31,7 +31,7 @@ public class ATVTest {
      * The number of times to repeat a test to have a high probability that all
      * random possibilities have been explored.
      */
-    private static final int TRIES_FOR_RANDOMNESS = 10;
+    private static final int TRIES_FOR_RANDOMNESS = 25;
     /**
      * test map for testing chooseDirection().
      */
@@ -120,10 +120,28 @@ public class ATVTest {
         TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
         TEST_MAP.put(Direction.EAST, Terrain.TRAIL);
         TEST_MAP.put(Direction.WEST, Terrain.CROSSWALK);
+        boolean choseNorth = false;
+        boolean choseWest = false;
+        boolean choseEast = false;
         for (int i = 0; i < TRIES_FOR_RANDOMNESS; i++) {
+            switch (myTestATV.chooseDirection(TEST_MAP)) {
+                case NORTH:
+                    choseNorth = true;
+                    break;
+                case WEST:
+                    choseWest = true;
+                    break;
+                case EAST:
+                    choseEast = true;
+                    break;
+                default:
+                    break;
+            }
             assertNotEquals(Direction.SOUTH, myTestATV.chooseDirection(TEST_MAP),
                     "ATV should never go backwards.");
         }
+        assertTrue(choseNorth && choseWest && choseEast,
+                "ATV should have random direction choice.");
     }
 
     @Test
