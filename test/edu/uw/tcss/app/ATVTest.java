@@ -1,6 +1,5 @@
 package edu.uw.tcss.app;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -55,29 +54,64 @@ public class ATVTest {
                 "Dead atv image filename is incorrect.");
     }
     @Test
-    void testCanPass() {
-        assertAll("Testing canPass()",
-                () -> assertTrue(myTestATV.canPass(Terrain.GRASS, Light.GREEN),
-                        "ATV should be able to pass grass."),
-                () -> assertTrue(myTestATV.canPass(Terrain.STREET, Light.GREEN),
-                        "ATV should be able to pass streets."),
-                () -> assertFalse(myTestATV.canPass(Terrain.WALL, Light.GREEN),
-                        "ATV should not be able to pass walls."),
-                () -> assertTrue(myTestATV.canPass(Terrain.TRAIL, Light.GREEN),
-                        "ATV should be able to pass trails."),
-                () -> assertTrue(myTestATV.canPass(Terrain.LIGHT, Light.GREEN),
-                        "ATV should be able to pass green lights."),
-                () -> assertTrue(myTestATV.canPass(Terrain.LIGHT, Light.YELLOW),
-                        "ATV should be able to pass yellow lights."),
-                () -> assertTrue(myTestATV.canPass(Terrain.LIGHT, Light.RED),
-                        "ATV should be able to pass red lights."),
-                () -> assertTrue(myTestATV.canPass(Terrain.CROSSWALK, Light.GREEN),
-                        "ATV should be able to pass green-light crosswalks."),
-                () -> assertTrue(myTestATV.canPass(Terrain.CROSSWALK, Light.YELLOW),
-                        "ATV should be able to pass yellow-light crosswalks."),
-                () -> assertTrue(myTestATV.canPass(Terrain.CROSSWALK, Light.RED),
-                        "ATV should be able to pass red-light crosswalks.")
-        );
+    void testCanPassGrass() {
+        final Terrain grass = Terrain.GRASS;
+        assertTrue(myTestATV.canPass(grass, Light.GREEN),
+                "ATV should be able to pass green-light grass.");
+        assertTrue(myTestATV.canPass(grass, Light.YELLOW),
+                "ATV should be able to pass yellow-light grass.");
+        assertTrue(myTestATV.canPass(grass, Light.RED),
+                "ATV should be able to pass red-light grass.");
+    }
+    @Test
+    void testCanPassStreet() {
+        final Terrain street = Terrain.STREET;
+        assertTrue(myTestATV.canPass(street, Light.GREEN),
+                "ATV should be able to pass green-light street.");
+        assertTrue(myTestATV.canPass(street, Light.YELLOW),
+                "ATV should be able to pass yellow-light street.");
+        assertTrue(myTestATV.canPass(street, Light.RED),
+                "ATV should be able to pass red-light street.");
+    }
+    @Test
+    void testCanPassLight() {
+        final Terrain light = Terrain.LIGHT;
+        assertTrue(myTestATV.canPass(light, Light.GREEN),
+                "ATV should be able to pass green-light light.");
+        assertTrue(myTestATV.canPass(light, Light.YELLOW),
+                "ATV should be able to pass yellow-light light.");
+        assertTrue(myTestATV.canPass(light, Light.RED),
+                "ATV should be able to pass red-light light.");
+    }
+    @Test
+    void testCanPassWall() {
+        final Terrain wall = Terrain.WALL;
+        assertFalse(myTestATV.canPass(wall, Light.GREEN),
+                "ATV should not be able to pass green-light wall.");
+        assertFalse(myTestATV.canPass(wall, Light.YELLOW),
+                "ATV should not be able to pass yellow-light wall.");
+        assertFalse(myTestATV.canPass(wall, Light.RED),
+                "ATV should not be able to pass red-light wall.");
+    }
+    @Test
+    void testCanPassTrail() {
+        final Terrain trail = Terrain.TRAIL;
+        assertTrue(myTestATV.canPass(trail, Light.GREEN),
+                "ATV should be able to pass green-light trail.");
+        assertTrue(myTestATV.canPass(trail, Light.YELLOW),
+                "ATV should be able to pass yellow-light trail.");
+        assertTrue(myTestATV.canPass(trail, Light.RED),
+                "ATV should be able to pass red-light trail.");
+    }
+    @Test
+    void testCanPassCrosswalk() {
+        final Terrain crosswalk = Terrain.CROSSWALK;
+        assertTrue(myTestATV.canPass(crosswalk, Light.GREEN),
+                "ATV should be able to pass green-light crosswalk.");
+        assertTrue(myTestATV.canPass(crosswalk, Light.YELLOW),
+                "ATV should be able to pass yellow-light crosswalk.");
+        assertTrue(myTestATV.canPass(crosswalk, Light.RED),
+                "ATV should be able to pass red-light crosswalk.");
     }
 
     @Test
@@ -99,7 +133,7 @@ public class ATVTest {
     }
 
     @Test
-    void testCollideCar() {
+    void testCollideATV() {
         myTestATV.collide(new Car(0, 0, Direction.NORTH));
         assertFalse(myTestATV.isAlive(), "ATV should not survive collision with Car.");
     }
