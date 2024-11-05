@@ -40,16 +40,21 @@ public class Truck extends AbstractVehicle {
 
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
-        Direction choice = Direction.random();
+        final Direction choice;
         if (!ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection()))
                 && !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().left()))
                 && !ALLOWED_TERRAIN.contains(theNeighbors.get(getDirection().right()))) {
             choice = getDirection().reverse();
         } else {
-            while (choice == getDirection().reverse()
-                    || !ALLOWED_TERRAIN.contains(theNeighbors.get(choice))) {
-                choice = Direction.random();
+            final EnumSet<Direction> options = EnumSet.noneOf(Direction.class);
+
+            for (final Map.Entry<Direction, Terrain> entry : theNeighbors.entrySet()) {
+                if (entry.getKey() != getDirection().reverse()
+                    && ALLOWED_TERRAIN.contains(entry.getValue())) {
+                    options.add(entry.getKey());
+                }
             }
+            choice = (Direction) options.toArray()[RANDOM.nextInt(options.size())];
         }
         return choice;
     }

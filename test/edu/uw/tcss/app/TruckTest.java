@@ -28,14 +28,14 @@ import org.junit.jupiter.api.Test;
  */
 public class TruckTest {
     /**
-     * test map for testing chooseDirection().
-     */
-    private static final Map<Direction, Terrain> TEST_MAP = new HashMap<>();
-    /**
      * The number of times to repeat a test to have a high probability that all
      * random possibilities have been explored.
      */
     private static final int TRIES_FOR_RANDOMNESS = 10;
+    /**
+     * test map for testing chooseDirection().
+     */
+    private Map<Direction, Terrain> myTestMap = new HashMap<>();
     /**
      * test Truck object for testing Truck methods.
      */
@@ -43,6 +43,7 @@ public class TruckTest {
     @BeforeEach
     void setup() {
         myTestTruck = new Truck(0, 0, Direction.NORTH);
+        myTestMap = new HashMap<>();
     }
 
     @Test
@@ -115,37 +116,40 @@ public class TruckTest {
     void testChooseDirection() {
         //I know this is not pretty but the test cases aren't graded on warnings
         //and I didn't care enough to figure out how to prettify it.
-        TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
-        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
-        TEST_MAP.put(Direction.EAST, Terrain.WALL);
-        TEST_MAP.put(Direction.WEST, Terrain.LIGHT);
+        myTestMap.put(Direction.NORTH, Terrain.GRASS);
+        myTestMap.put(Direction.SOUTH, Terrain.STREET);
+        myTestMap.put(Direction.EAST, Terrain.WALL);
+        myTestMap.put(Direction.WEST, Terrain.LIGHT);
         for (int i = 0; i < TRIES_FOR_RANDOMNESS; i++) {
-            assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
+            assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(myTestMap),
                             "Truck should prefer any direction but backwards.");
         }
-        TEST_MAP.clear();
-        TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
-        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
-        TEST_MAP.put(Direction.EAST, Terrain.TRAIL);
-        TEST_MAP.put(Direction.WEST, Terrain.WALL);
-        assertEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
+
+        myTestMap.clear();
+        myTestMap.put(Direction.NORTH, Terrain.STREET);
+        myTestMap.put(Direction.SOUTH, Terrain.STREET);
+        myTestMap.put(Direction.EAST, Terrain.STREET);
+        myTestMap.put(Direction.WEST, Terrain.STREET);
+        for (int i = 0; i < TRIES_FOR_RANDOMNESS; i++) {
+            assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(myTestMap),
+                    "Truck should prefer any direction but backwards.");
+        }
+
+        myTestMap.clear();
+        myTestMap.put(Direction.NORTH, Terrain.GRASS);
+        myTestMap.put(Direction.SOUTH, Terrain.STREET);
+        myTestMap.put(Direction.EAST, Terrain.TRAIL);
+        myTestMap.put(Direction.WEST, Terrain.WALL);
+        assertEquals(Direction.SOUTH, myTestTruck.chooseDirection(myTestMap),
                 "Truck should reverse if forced to.");
 
-        TEST_MAP.clear();
-        TEST_MAP.put(Direction.NORTH, Terrain.GRASS);
-        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
-        TEST_MAP.put(Direction.EAST, Terrain.CROSSWALK);
-        TEST_MAP.put(Direction.WEST, Terrain.WALL);
-        assertEquals(Direction.EAST, myTestTruck.chooseDirection(TEST_MAP),
+        myTestMap.clear();
+        myTestMap.put(Direction.NORTH, Terrain.GRASS);
+        myTestMap.put(Direction.SOUTH, Terrain.STREET);
+        myTestMap.put(Direction.EAST, Terrain.CROSSWALK);
+        myTestMap.put(Direction.WEST, Terrain.WALL);
+        assertEquals(Direction.EAST, myTestTruck.chooseDirection(myTestMap),
                 "Truck should take single exit over reversing.");
-
-        TEST_MAP.clear();
-        TEST_MAP.put(Direction.NORTH, Terrain.STREET);
-        TEST_MAP.put(Direction.SOUTH, Terrain.STREET);
-        TEST_MAP.put(Direction.EAST, Terrain.STREET);
-        TEST_MAP.put(Direction.WEST, Terrain.STREET);
-        assertNotEquals(Direction.SOUTH, myTestTruck.chooseDirection(TEST_MAP),
-                "Truck should prefer any direction but backwards.");
     }
 
     @Test

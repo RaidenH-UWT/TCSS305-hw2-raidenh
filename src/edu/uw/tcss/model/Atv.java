@@ -37,10 +37,15 @@ public class Atv extends AbstractVehicle {
     //TODO: MUST CHOOSE VALID DIRECTION IN ALLOWED_TERRAIN
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
-        Direction choice = getDirection().reverse();
-        while (choice == getDirection().reverse()) {
-            choice = Direction.random();
+        final EnumSet<Direction> options = EnumSet.noneOf(Direction.class);
+
+        for (final Map.Entry<Direction, Terrain> entry : theNeighbors.entrySet()) {
+            if (entry.getKey() != getDirection().reverse()
+                    && ALLOWED_TERRAIN.contains(entry.getValue())) {
+                options.add(entry.getKey());
+            }
         }
-        return choice;
+
+        return (Direction) options.toArray()[RANDOM.nextInt(options.size())];
     }
 }
