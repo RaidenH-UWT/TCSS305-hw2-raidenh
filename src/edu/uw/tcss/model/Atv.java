@@ -34,7 +34,6 @@ public class Atv extends AbstractVehicle {
         return ALLOWED_TERRAIN.contains(theTerrain);
     }
 
-    //TODO: MUST CHOOSE VALID DIRECTION IN ALLOWED_TERRAIN
     @Override
     public Direction chooseDirection(final Map<Direction, Terrain> theNeighbors) {
         final EnumSet<Direction> options = EnumSet.noneOf(Direction.class);
@@ -45,7 +44,7 @@ public class Atv extends AbstractVehicle {
                 options.add(entry.getKey());
             }
         }
-
+        //I don't like casting here but they are guaranteed to be Directions
         return (Direction) options.toArray()[RANDOM.nextInt(options.size())];
     }
 }

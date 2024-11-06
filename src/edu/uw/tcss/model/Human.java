@@ -51,13 +51,15 @@ public class Human extends AbstractVehicle {
                 }
             }
         } else {
-            if (canPass(theNeighbors.get(getDirection()), Light.GREEN)
-                || canPass(theNeighbors.get(getDirection().left()), Light.GREEN)
-                || canPass(theNeighbors.get(getDirection().right()), Light.GREEN)) {
-                while (choice == getDirection().reverse()) {
-                    choice = Direction.random();
+            final EnumSet<Direction> options = EnumSet.noneOf(Direction.class);
+
+            for (final Map.Entry<Direction, Terrain> entry : theNeighbors.entrySet()) {
+                if (entry.getKey() != getDirection().reverse()
+                        && ALLOWED_TERRAIN.contains(entry.getValue())) {
+                    options.add(entry.getKey());
                 }
             }
+            choice = (Direction) options.toArray()[RANDOM.nextInt(options.size())];
         }
         return choice;
     }
