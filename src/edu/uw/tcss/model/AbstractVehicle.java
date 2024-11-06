@@ -106,7 +106,6 @@ public abstract class AbstractVehicle implements Vehicle {
         return myPokeTolerance - myPokeCount == myPokeTolerance;
     }
 
-    //TODO: HAS TO SET TO A VALID DIRECTION FOR THE SPECIFIC VEHICLE
     @Override
     public void poke() {
         myPokeCount--;
