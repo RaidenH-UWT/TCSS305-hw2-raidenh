@@ -44,8 +44,8 @@ public interface Vehicle {
     void collide(Vehicle theOther);
 
     /**
-     * Returns the number of updates between this vehicle's death and when it
-     * should be revived.
+     * Returns the number of updates before a vehicle of this type should
+     * be revived.
      * 
      * @return the number of updates.
      */
